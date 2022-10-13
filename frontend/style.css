@@ -1,0 +1,40 @@
+/* Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100vh;
+    width: 100%;
+}
+
+
+.app {
+    display: flex;
+    gap: 50px;
+}
+
+
+.results {
+    border-left: 2 px solid black;
+}
+
+
+.filter-container {
+
+    width: 25%;
+
+}
+
+ul {
+    list-style: none;
+    
+}
+
+li {
+    display: block;
+}
