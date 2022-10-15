@@ -1,40 +1,136 @@
-/* Reset */
+html {
+  height: 100%;
+  font-size: 62.5%;
+  line-height: 1.7;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 1.6rem;
+  position: relative;
+  transition: all 0.6s;
+}
+
+body {
+  font-family: "Merriweather", serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Work Sans", sans-serif;
+}
+
+.font--light {
+  color: #c2c2c2;
+}
+
+.font--highlight {
+  color: #ffab66;
+}
+
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html {
-    height: 100vh;
-    width: 100%;
+ol, ul {
+  list-style: none;
 }
 
+.header {
+  background-color: #1d678e;
+  padding: 3rem 2rem;
+}
+
+.row {
+  max-width: 114rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
 
 .app {
-    display: flex;
-    gap: 50px;
+  display: flex;
+  gap: 5rem;
+  overflow: hidden;
 }
 
-
-.results {
-    border-left: 2 px solid black;
+.facets, .results-container {
+  padding-top: 5rem;
 }
 
-
-.filter-container {
-
-    width: 25%;
-
+.facets {
+  border-right: 2px solid rgba(194, 194, 194, 0.2);
+  padding-right: 2rem;
 }
 
-ul {
-    list-style: none;
-    
+.input {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  font-size: 2.4rem;
+}
+.input::-moz-placeholder {
+  color: #c2c2c2;
+}
+.input:-ms-input-placeholder {
+  color: #c2c2c2;
+}
+.input::placeholder {
+  color: #c2c2c2;
 }
 
-li {
-    display: block;
+.metadata {
+  position: relative;
+  margin-bottom: 3rem;
 }
+.metadata::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  height: 2px;
+  width: 200%;
+  background-color: rgba(194, 194, 194, 0.2);
+}
+.metadata__results {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.metadata__seconds {
+  font-size: 1.3rem;
+}
+
+.hit {
+  display: flex;
+  flex-direction: row;
+}
+.hit:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.hit__img {
+  border-radius: 15px;
+  margin-right: 2rem;
+  max-height: 12rem;
+}
+
+.stars--outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+.stars--outer::before {
+  content: "\f006\f006\f006\f006\f006";
+}
+.stars--inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 50%;
+}
+.stars--inner::before {
+  content: "\f005\f005\f005\f005\f005";
+  color: #ffab66;
+}/*# sourceMappingURL=style.css.map */
