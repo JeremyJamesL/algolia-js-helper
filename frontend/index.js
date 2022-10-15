@@ -127,15 +127,34 @@ function renderFacetList(content) {
         html += `<h2 id=${type}>${typeTitle}</h2>
                  <ul id=${type}>
         `
-        facetValues.forEach(value => {
-            html += `
-            <li>
-                <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} />
-                <label for="fl-${value.name}">${value.name} (${value.count})</label>
-            </li>
-            `;
-            
-        })
+
+        if(type==='rounded_rating') {
+            facetValues.forEach(value => {
+                html += `
+                <li>
+                    <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} style="display: none" />
+                    <label for="fl-${value.name}">
+                            
+                        ${renderStars(value.name)}
+                    
+                    </label>
+                </li>
+                `;
+            })
+        }
+
+        else {
+            facetValues.forEach(value => {
+                html += `
+                <li>
+                    <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} />
+                    <label for="fl-${value.name}">${value.name} (${value.count})</label>
+                </li>
+                `;
+                
+            })
+
+        }
         html += "</ul>";
         facetsArea.innerHTML = html;
     })
