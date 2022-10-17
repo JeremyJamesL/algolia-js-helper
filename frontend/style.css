@@ -64,6 +64,15 @@ ol, ul {
 .facets {
   border-right: 2px solid rgba(194, 194, 194, 0.2);
   padding-right: 2rem;
+  width: 25%;
+}
+
+.results {
+  margin-bottom: 2rem;
+}
+
+.results-container {
+  width: 75%;
 }
 
 .input {
@@ -133,4 +142,26 @@ ol, ul {
 .stars--inner::before {
   content: "\f005\f005\f005\f005\f005";
   color: #ffab66;
+}
+
+.facets__type:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.facets__facet {
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+.facets__facet:has(input[type=checkbox]:checked) {
+  background-color: #3397c5;
+  color: white;
+}
+.facets__facet input {
+  display: none;
+}
+.facets__facet label {
+  cursor: pointer;
+}
+
+.pagination {
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */

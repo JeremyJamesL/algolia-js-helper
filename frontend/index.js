@@ -1,5 +1,5 @@
 var client = algoliasearch('YSWWVAX5RB', '9fb3db0222f7b5aef0e2b30791ee6201');
-var helper = algoliasearchHelper(client, 'restaurants', {facets: ['food_type', 'rounded_rating', 'payment_options'], maxValuesPerFacet: 5});
+var helper = algoliasearchHelper(client, 'restaurants', {hitsPerPage: 10, facets: ['food_type', 'rounded_rating', 'payment_options'], maxValuesPerFacet: 5});
 
 // DOM
 const app = document.querySelector('.app');
@@ -7,24 +7,43 @@ const searchInput = document.querySelector('.search-box');
 const resultsArea = document.querySelector('.results');
 const facetsArea = document.querySelector('.facets');
 const metaData = document.querySelector('.metadata');
+const paginationNav = document.querySelector('.pagination');
+const currentPage = document.querySelector('.pagination__cur');
+const pagination = document.querySelector('.pagination');
 
 
 const successCallback = (position) => {
-    console.log(position);
-    console.log(position.coords.latitude, position.coords.longitude);
+    // console.log(position);
+    // console.log(position.coords.latitude, position.coords.longitude);
     helper.setQueryParameter('aroundLatLng', `${position.coords.latitude},${position.coords.longitude}`);
   };
   
   const errorCallback = (error) => {
-    console.log(error);
+    // console.log(error);
   };
   
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
-// Listen on search input
+// Listeners
 searchInput.addEventListener('keydown', logQuery);
 facetsArea.addEventListener('click', updateFacets);
+facetsArea.addEventListener('click', updateFacets);
+pagination.addEventListener('click', updatePages);
 
+
+
+function updatePages(e) {
+    if(e.target.name === 'next') {
+        const nextPage =  helper.nextPage().getPage();
+        helper.setPage(nextPage).search();
+    } else if(e.target.name === 'prev') {
+        const prevPage = helper.previousPage().getPage();
+        helper.setPage(prevPage).search();
+    }
+}   
+
+
+// Event functions
 
 function logQuery(e) {
     helper.setQuery(e.target.value).search();
@@ -32,7 +51,6 @@ function logQuery(e) {
 
 
 function updateFacets(e) {
-    // console.log(e);
     if(e.target.type === 'checkbox') {
         const facetValue = e.target.name;
         const type = e.target.parentElement.parentElement.id;
@@ -44,17 +62,30 @@ function updateFacets(e) {
 
 helper.search();
 
+
+
 helper.on('result', function(event) {
     renderMetadata(event.results);
-    console.log(event);
     renderHits(event.results);
     renderFacetList(event.results);
+    renderPagination(event.results);
 });
+
+
+
+function renderPagination(content) {
+    const currPage = helper.setPage(content.page).getPage();
+    currentPage.innerHTML = `${currPage}`;
+    console.log(currPage);
+}
   
 
-// Render a result
 
 function renderHits(content) {
+
+
+    // Render results
+
     resultsArea.innerHTML = '';
 
     const results = content.hits;
@@ -88,14 +119,21 @@ function renderHits(content) {
                 </div>
             </li>
         `
+
     });
+
+
+
+
 }
+
+
+
 
 
 // Render stars 
 
 function renderStars(starsCount, id) {
-    console.log(starsCount,id)
 
     const maxStars = 5;
 
@@ -125,18 +163,15 @@ function renderFacetList(content) {
         const facetValues = content.getFacetValues(type);
         let typeTitle = type === 'food_type' ? 'Cuisine / Food Type' : type === 'rounded_rating' ? 'Rating' : type === "payment_options" ? 'Payment Options' : '';
         html += `<h2 id=${type}>${typeTitle}</h2>
-                 <ul id=${type}>
+                 <ul id=${type} class="facets__type">
         `
-
         if(type==='rounded_rating') {
             facetValues.forEach(value => {
                 html += `
-                <li>
+                <li class="facets__facet">
                     <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} style="display: none" />
                     <label for="fl-${value.name}">
-                            
                         ${renderStars(value.name)}
-                    
                     </label>
                 </li>
                 `;
@@ -146,7 +181,7 @@ function renderFacetList(content) {
         else {
             facetValues.forEach(value => {
                 html += `
-                <li>
+                <li  class="facets__facet"">
                     <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} />
                     <label for="fl-${value.name}">${value.name} (${value.count})</label>
                 </li>
@@ -155,7 +190,8 @@ function renderFacetList(content) {
             })
 
         }
-        html += "</ul>";
+        html += `</ul> 
+        `;
         facetsArea.innerHTML = html;
     })
 
