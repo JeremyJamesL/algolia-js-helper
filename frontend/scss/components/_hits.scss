@@ -1,0 +1,16 @@
+.hit {
+    display: flex;
+    flex-direction: row;
+
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+
+    &__img {
+        border-radius: 15px;
+        margin-right: 2rem;
+        max-height: 12rem;
+    }
+
+}

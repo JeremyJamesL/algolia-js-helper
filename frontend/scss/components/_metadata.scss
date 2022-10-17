@@ -1,0 +1,24 @@
+.metadata {
+    position: relative;
+    // width: 100%;
+    // border-bottom: 2px solid $font-light;
+    margin-bottom: 3rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        height: 2px;
+        width: 200%;
+        background-color: $border;
+    }
+
+    &__results{
+        font-weight: bold;
+        font-size: 2rem;
+    }
+
+    &__seconds {
+        font-size: 1.3rem;
+    }
+}

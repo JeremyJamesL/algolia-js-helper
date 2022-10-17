@@ -1,0 +1,14 @@
+html {
+    height: 100%;
+    font-size: 62.5%; // 16px base font font turned to 10px, to allow 1rem to be base measurement
+    line-height: 1.7;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+
+body {
+    font-size: 1.6rem;
+    position: relative;
+    transition: all .6s;
+}

@@ -1,0 +1,27 @@
+.app {
+    display: flex;
+    gap: 5rem;
+    overflow: hidden;
+}
+
+
+.facets, .results-container {
+    padding-top: 5rem;
+}
+
+
+.facets {
+    border-right: 2px solid $border;
+    padding-right: 2rem;
+    width: 25%;
+}
+
+.results {
+    margin-bottom: 2rem;
+}
+
+.results-container {
+    width: 75%;
+}
+
+
