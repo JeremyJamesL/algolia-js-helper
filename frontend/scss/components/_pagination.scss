@@ -1,12 +1,31 @@
 .pagination {
-    text-align: center;
+    // text-align: center;
+    display: flex;
+    justify-content: space-between;
 
 
-    // &__next {
-    //     background-color: transparent;
-    //     border: 1px solid $font-light;
-    //     padding: 2rem;
-    //     cursor: pointer;
-    // }
+    &__nav {
+        color: white;
+        font-size: 1.8rem;
+        background-color: $color-selected;
+        border: none;
+        padding: .5rem 0.25rem;
+        flex: 33%;
+        cursor: pointer;
+
+        &--next {
+
+        }
+
+        &--prev {
+
+        }
+    }
+
+
+    &__cur {
+        flex: 33%;
+        text-align: center;
+    }
 
 }

@@ -1,4 +1,13 @@
 .facets {
+
+    border-right: 2px solid $border;
+    padding-right: 2rem;
+    position: -webkit-sticky;
+    width: 25%;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+
     &__type {
         &:not(:last-child) {
             margin-bottom: 1rem;
@@ -12,6 +21,11 @@
         &:has(input[type="checkbox"]:checked) {
             background-color: $color-selected;
             color: white;
+
+            span:last-child {
+                color: white;
+            }
+
         }
 
         input {
@@ -19,7 +33,14 @@
         }
 
         label {
+            display: flex;
+            justify-content: space-between;
             cursor: pointer;
+
+            span:last-child {
+                color: $font-light;
+            }
+
         }
         
     }

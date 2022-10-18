@@ -1,7 +1,9 @@
 .app {
     display: flex;
     gap: 5rem;
-    overflow: hidden;
+    // overflow: hidden;
+    height: auto;
+    padding-bottom: 5rem;
 }
 
 
@@ -10,14 +12,12 @@
 }
 
 
-.facets {
-    border-right: 2px solid $border;
-    padding-right: 2rem;
-    width: 25%;
-}
+// .facets {
+   
+// }
 
 .results {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
 }
 
 .results-container {

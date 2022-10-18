@@ -10,8 +10,16 @@ const metaData = document.querySelector('.metadata');
 const paginationNav = document.querySelector('.pagination');
 const currentPage = document.querySelector('.pagination__cur');
 const pagination = document.querySelector('.pagination');
+const resetBtn = document.querySelector('.reset');
 
+// Global variables
+let numPages;
+const facetTypesArr = ['food_type', 'rounded_rating', 'payment_options'];
 
+// Run default search
+helper.search();
+
+// Geo location
 const successCallback = (position) => {
     // console.log(position);
     // console.log(position.coords.latitude, position.coords.longitude);
@@ -27,23 +35,32 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 // Listeners
 searchInput.addEventListener('keydown', logQuery);
 facetsArea.addEventListener('click', updateFacets);
-facetsArea.addEventListener('click', updateFacets);
 pagination.addEventListener('click', updatePages);
+resetBtn.addEventListener('click', resetFilters);
 
+
+
+// Event functions
+function resetFilters(e) {
+    e.preventDefault();
+    helper.clearRefinements().search();
+}
 
 
 function updatePages(e) {
-    if(e.target.name === 'next') {
+
+    // Get page count
+    console.log(numPages);
+
+    if(e.target.name === 'next' && helper.getPage() < numPages - 1) {
         const nextPage =  helper.nextPage().getPage();
         helper.setPage(nextPage).search();
-    } else if(e.target.name === 'prev') {
+    } else if(e.target.name === 'prev' && helper.getPage() !== 0) {
         const prevPage = helper.previousPage().getPage();
         helper.setPage(prevPage).search();
     }
 }   
 
-
-// Event functions
 
 function logQuery(e) {
     helper.setQuery(e.target.value).search();
@@ -51,20 +68,21 @@ function logQuery(e) {
 
 
 function updateFacets(e) {
+
+    const facetType = e.target.parentElement.parentElement.id;
+    const facetValue = e.target.name;
+
+    // Toggle facet
     if(e.target.type === 'checkbox') {
-        const facetValue = e.target.name;
-        const type = e.target.parentElement.parentElement.id;
-        helper.toggleFacetRefinement(type, facetValue)
+        helper.toggleFacetRefinement(facetType, facetValue)
         .search();
     }
+
 }
 
 
-helper.search();
-
-
-
 helper.on('result', function(event) {
+    getPages(event.results);
     renderMetadata(event.results);
     renderHits(event.results);
     renderFacetList(event.results);
@@ -72,19 +90,19 @@ helper.on('result', function(event) {
 });
 
 
+function getPages(content) {
+    numPages = content.nbPages;
+}
+
 
 function renderPagination(content) {
-    const currPage = helper.setPage(content.page).getPage();
+    const currPage = helper.setPage(content.page).getPage() + 1;
     currentPage.innerHTML = `${currPage}`;
-    console.log(currPage);
 }
   
 
 
 function renderHits(content) {
-
-
-    // Render results
 
     resultsArea.innerHTML = '';
 
@@ -121,19 +139,13 @@ function renderHits(content) {
         `
 
     });
-
-
-
-
 }
-
-
 
 
 
 // Render stars 
 
-function renderStars(starsCount, id) {
+function renderStars(starsCount) {
 
     const maxStars = 5;
 
@@ -161,8 +173,9 @@ function renderFacetList(content) {
 
     facetTypes.forEach(type => {
         const facetValues = content.getFacetValues(type);
-        let typeTitle = type === 'food_type' ? 'Cuisine / Food Type' : type === 'rounded_rating' ? 'Rating' : type === "payment_options" ? 'Payment Options' : '';
-        html += `<h2 id=${type}>${typeTitle}</h2>
+        let typeTitle = type === 'food_type' ? 'Cuisine' : type === 'rounded_rating' ? 'Rating' : type === "payment_options" ? 'Payment Options' : '';
+        html += `<div>
+                <h2 class="heading--${type}">${typeTitle}</h2>
                  <ul id=${type} class="facets__type">
         `
         if(type==='rounded_rating') {
@@ -171,7 +184,7 @@ function renderFacetList(content) {
                 <li class="facets__facet">
                     <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} style="display: none" />
                     <label for="fl-${value.name}">
-                        ${renderStars(value.name)}
+                        <span>${renderStars(value.name)}</span> <span>${value.count}</span>
                     </label>
                 </li>
                 `;
@@ -181,18 +194,30 @@ function renderFacetList(content) {
         else {
             facetValues.forEach(value => {
                 html += `
-                <li  class="facets__facet"">
-                    <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name=${value.name} />
-                    <label for="fl-${value.name}">${value.name} (${value.count})</label>
+                <li class="facets__facet">
+                    <input type="checkbox" ${value.isRefined ? 'checked' : ''} id="fl-${value.name}" name="${value.name}" />
+                    <label for="fl-${value.name}"><span>${value.name}</span> <span>${value.count}</span></label>
                 </li>
                 `;
                 
             })
 
         }
-        html += `</ul> 
+        html += `</ul>
+        </div> 
         `;
         facetsArea.innerHTML = html;
+    })
+
+
+    // If facet has refinement, add clear button
+    facetTypes.forEach(facetType => {
+        if(helper.hasRefinements(facetType) === true) {
+            document.querySelector(`.heading--${facetType}`).innerHTML = 'something';
+            // console.log(`${facetType} is true`)
+        }
+        // console.log(helper.hasRefinements(facetType));
+
     })
 
 }
