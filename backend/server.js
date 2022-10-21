@@ -1,5 +1,6 @@
+import {ID, KEY} from '.modules/creds.js';
 const algoliasearch = require('algoliasearch');
-const client = algoliasearch('YSWWVAX5RB', '4203de3b08b981c149883b0af830db30');
+const client = algoliasearch(ID, KEY);
 const index = client.initIndex('restaurants');
 const csv = require ('csvtojson');
 
@@ -29,22 +30,24 @@ async function main() {
     // Save CSV to Algolia index
     index.saveObjects(dataCSV)
     .then(({objectIDs}) => {
-        console.log('sucessfully added records with the following IDs:');
+        console.log('sucessfully added records');
         console.table(objectIDs);
+
+        // Save JSON to Algolia as update
+        index.partialUpdateObjects(dataJSON)
+        .then(({objectIDs}) => {
+            console.log('sucessfully updated records');
+            console.table(objectIDs);
+        })
+        .catch(error => {
+            console.error('Error when updating objects', error);
+        })
+
     })
     .catch(error => {
         console.error('Error when indexing objects', error);
     })
 
-    // Update above records with additional data
-    index.partialUpdateObjects(dataJSON)
-    .then(({objectIDs}) => {
-        console.log('sucessfully updated records with the following IDs:');
-        console.table(objectIDs);
-    })
-    .catch(error => {
-        console.error('Error when updating objects', error);
-    })
 }
 
 main();

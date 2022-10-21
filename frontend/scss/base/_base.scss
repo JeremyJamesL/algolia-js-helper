@@ -4,6 +4,23 @@ html {
     line-height: 1.7;
     scroll-behavior: smooth;
     overflow-x: hidden;
+
+    @include respond(big-desktop) {
+        font-size: 75%; 
+    }
+
+    @include respond(tab-land) { 
+        font-size: 60%; 
+    }
+
+    @include respond(tab-port) { 
+        font-size: 57%; 
+    }
+
+    @include respond(phone) {
+        font-size: 52%; 
+    }
+
 }
 
 

@@ -9,7 +9,7 @@
         position: absolute;
         bottom: 5px;
         height: 2px;
-        width: 200%;
+        max-width: 100%;
         background-color: $border;
     }
 

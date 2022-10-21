@@ -1,9 +1,38 @@
+/* 
+BREAKPOINTS
+0-600px: Phone
+600px - 900px: Tablet portrait
+900px - 1200px: Tablet landscape
+(1200px - 1800px) is where normal styles apply
+>= 1800px: Big desktop
+$BREAKPOINT ARGUMENT CHOICES
+- phone
+- tab-port
+- tab-land
+- desk-big
+1em = 16px
+*/
 html {
   height: 100%;
   font-size: 62.5%;
   line-height: 1.7;
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+@media (max-width: 75em) {
+  html {
+    font-size: 60%;
+  }
+}
+@media (max-width: 56.25em) {
+  html {
+    font-size: 57%;
+  }
+}
+@media (max-width: 37.5em) {
+  html {
+    font-size: 52%;
+  }
 }
 
 body {
@@ -56,6 +85,12 @@ ol, ul {
   gap: 5rem;
   height: auto;
   padding-bottom: 5rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 75em) {
+  .app {
+    gap: 2rem;
+  }
 }
 
 .facets, .results-container {
@@ -68,12 +103,31 @@ ol, ul {
 
 .results-container {
   width: 75%;
+  padding-left: 4rem;
+  border-left: 2px solid rgba(194, 194, 194, 0.2);
+}
+@media (max-width: 75em) {
+  .results-container {
+    border-left: none;
+    padding-left: 0;
+    width: 100%;
+  }
+}
+.results-container__header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media (max-width: 37.5em) {
+  .results-container__header {
+    margin-bottom: 4rem;
+  }
 }
 
 .input {
   width: 100%;
   padding: 1.2rem 2rem;
-  font-size: 2.4rem;
+  font-size: 2rem;
 }
 .input::-moz-placeholder {
   color: #c2c2c2;
@@ -83,6 +137,17 @@ ol, ul {
 }
 .input::placeholder {
   color: #c2c2c2;
+}
+@media (max-width: 37.5em) {
+  .input::-moz-placeholder {
+    color: transparent;
+  }
+  .input:-ms-input-placeholder {
+    color: transparent;
+  }
+  .input::placeholder {
+    color: transparent;
+  }
 }
 
 .metadata {
@@ -94,7 +159,7 @@ ol, ul {
   position: absolute;
   bottom: 5px;
   height: 2px;
-  width: 200%;
+  max-width: 100%;
   background-color: rgba(194, 194, 194, 0.2);
 }
 .metadata__results {
@@ -109,8 +174,40 @@ ol, ul {
   display: flex;
   flex-direction: row;
 }
+@media (max-width: 37.5em) {
+  .hit {
+    flex-direction: column;
+    text-align: center;
+  }
+}
 .hit:not(:last-child) {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+}
+@media (max-width: 37.5em) {
+  .hit__ratrevs {
+    margin-top: 2rem;
+  }
+}
+.hit__name {
+  display: inline-block;
+  margin-right: 2rem;
+  line-height: 1;
+}
+@media (max-width: 37.5em) {
+  .hit__name {
+    margin-bottom: 1rem;
+    display: block;
+  }
+}
+.hit__book {
+  display: inline-block;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  padding: 0.8rem 1.2rem;
+  color: white;
+  background-color: #da3743;
+  font-weight: 700;
+  text-decoration: none;
 }
 .hit__img {
   border-radius: 15px;
@@ -140,20 +237,57 @@ ol, ul {
 }
 
 .facets {
-  border-right: 2px solid rgba(194, 194, 194, 0.2);
-  padding-right: 2rem;
+  width: 20%;
+  height: 100%;
   position: -webkit-sticky;
-  width: 25%;
   position: sticky;
   top: 0;
   align-self: flex-start;
 }
-.facets__type:not(:last-child) {
-  margin-bottom: 1rem;
+@media (max-width: 75em) {
+  .facets {
+    position: relative;
+    height: initial;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+.facets__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.facets__heading {
+  display: inline;
+  margin-right: auto;
+}
+.facets__reset {
+  background-color: transparent;
+  border: none;
+  color: #1d678e;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-left: 4px;
+}
+@media (max-width: 37.5em) {
+  .facets__reset {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+  }
+}
+.facets__type {
+  margin-bottom: 2rem;
 }
 .facets__facet {
   padding: 0px 10px;
   border-radius: 5px;
+}
+@media (max-width: 37.5em) {
+  .facets__facet {
+    padding: 0px 2px;
+  }
 }
 .facets__facet:has(input[type=checkbox]:checked) {
   background-color: #3397c5;
@@ -172,11 +306,13 @@ ol, ul {
 }
 .facets__facet label span:last-child {
   color: #c2c2c2;
+  margin-left: 1rem;
 }
 
 .pagination {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .pagination__nav {
   color: white;
@@ -190,4 +326,14 @@ ol, ul {
 .pagination__cur {
   flex: 33%;
   text-align: center;
+}
+
+.sorting {
+  font-family: "Work Sans", sans-serif;
+  padding: 0.25rem;
+}
+.sorting label {
+  color: #c2c2c2;
+  margin-right: 1rem;
+  font-size: 1.5rem;
 }/*# sourceMappingURL=style.css.map */

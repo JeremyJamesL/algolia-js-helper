@@ -18,25 +18,37 @@
 
     <div class="header">
         <div class="row">
-            <input type="text" autocomplete="off" id="search-box" class="search-box input" placeholder="Search by Restaurants by Name, Cuisine, Location"/>
+            <input type="text" autocomplete="off" id="search-box" class="search-box input" placeholder="Search restaurants by name, cuisine, location..."/>
         </div>
     </div>
 
    
     <div class="app row">
-        <a href="" class="reset">
-            Reset
-        </a>
  
             <nav class="facets">
 
             </nav>
 
-
             <section class="results-container">
-                <div class="metadata">  
+                <div class="results-container__header">
+                    <div class="metadata">  
                     
+                    </div>
+                    
+                    <div class="sorting">
+                        <label for="sorting">Sort</label>
+                        <select name="" id="sorting" class="sorting">
+                            <option value="restaurants">Most relevant</option>
+                            <option value="restaurants_price_asc">Price low to high</option>
+                            <option value="restaurants_price_desc">Price high to low</option>
+                            <option value="restaurants_rating_asc">Rating low to high</option>
+                            <option value="restaurants_rating_desc">Rating high to low</option>
+                        </select>
+                    </div>
+
+
                 </div>
+
                 <ul class="results">
 
                 </ul>
@@ -60,6 +72,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@3.11.1/dist/algoliasearch.helper.min.js"></script>   
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
 </html>

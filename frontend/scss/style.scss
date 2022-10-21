@@ -1,5 +1,6 @@
 // Abstracts
 @import "abstracts/abstracts";
+@import "abstracts/media-manager";
 
 // Base 
 @import "base/base";
@@ -18,3 +19,4 @@
 @import "components/star-rating";
 @import "components/facets";
 @import "components/pagination";
+@import "components/sorting";

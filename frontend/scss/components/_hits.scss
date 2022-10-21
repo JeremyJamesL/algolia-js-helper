@@ -2,15 +2,49 @@
     display: flex;
     flex-direction: row;
 
-    &:not(:last-child) {
-        margin-bottom: 2rem;
+    @include respond(phone) {
+        flex-direction: column;
+        text-align: center;
     }
 
+    &:not(:last-child) {
+        margin-bottom: 4rem;
+    }
+
+    &__ratrevs {
+        @include respond(phone) {
+            margin-top: 2rem;
+        }
+    }
+
+    &__name {
+        display: inline-block;
+        margin-right: 2rem;
+        line-height: 1;
+
+        @include respond(phone) {
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+    }
+
+    &__book {
+        display: inline-block;
+        font-size: 1.3rem;
+        border-radius: 5px;
+        padding: .8rem 1.2rem;
+        color: white;
+        background-color: $color-select;
+        font-weight: 700;
+        text-decoration: none;
+    }
 
     &__img {
         border-radius: 15px;
         margin-right: 2rem;
         max-height: 12rem;
+    
     }
 
 }
